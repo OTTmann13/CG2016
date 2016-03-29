@@ -37,7 +37,7 @@ public class SphereNode extends Node {
 
 	@Override
 	public void drawGl(GL2 gl) {
-		gl.glColor3d(0.75, 0.25, 0.25);
+		gl.glColor3d(0.0, 1.0, 0.0);
 		GLU glu = new GLU();
 		GLUquadric earth = glu.gluNewQuadric();
 		glu.gluQuadricDrawStyle(earth, GLU.GLU_FILL);
