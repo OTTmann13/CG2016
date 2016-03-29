@@ -75,7 +75,8 @@ public class CGFrame extends AbstractCGFrame {
     
     Random rand = new Random();
     for(int i = 0; i < 50; i++) {
-    	TranslationNode spreadTrees = new TranslationNode(new Vector3(rand.nextInt(13 - -3 + 1) -3.0, 1.0, rand.nextInt(13 - -3 + 1) -3.0));
+    	TranslationNode spreadTrees = new TranslationNode
+    			(new Vector3(rand.nextInt(13 - -3 + 1) -3.0, 1.0, rand.nextInt(13 - -3 + 1) -3.0));
     	spreadTrees.addChild(new TreeNode());
     	scaleTree.addChild(spreadTrees);
     }
