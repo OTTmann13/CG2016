@@ -86,7 +86,7 @@ public class CGFrame extends AbstractCGFrame {
     
 //    //Rotate
 //    RotationNode rotationNode = new RotationNode(90.0, new Vector3(1.0, 1.0, 1.0));
-//    getRoot().addChild(rotationNode);
+//    shaderNode.addChild(rotationNode);
 //
 //    //Translate
 //    TranslationNode translationNode = new TranslationNode(new Vector3(0.0, 0.0, 0.0));

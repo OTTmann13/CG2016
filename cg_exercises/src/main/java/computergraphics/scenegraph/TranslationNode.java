@@ -1,3 +1,10 @@
+/**
+* Praktikum CG, SS 2016
+* Gruppe: Steffen Schweneker (steffen.schweneker@haw-hamburg.de),
+* Jan Spijker (jan.spijker@haw-hamburg.de)
+* Aufgabe: Aufgabenblatt 1, Aufgabe 1.2
+*/
+
 package computergraphics.scenegraph;
 
 import com.jogamp.opengl.GL2;
@@ -15,14 +22,12 @@ public class TranslationNode extends Node{
 	@Override
 	public void drawGl(GL2 gl) {
 		gl.glPushMatrix();
-		
-		gl.glTranslatef((float)translate.get(0), (float)translate.get(1),
-				(float)translate.get(2));
-		
-		for(int childrenIndex = 0; childrenIndex < getNumberOfChildren(); childrenIndex++) {
-			getChildNode(childrenIndex).drawGl(gl);
-		}
-		
+			gl.glTranslatef((float)translate.get(0), (float)translate.get(1),
+					(float)translate.get(2));
+			
+			for(int childrenIndex = 0; childrenIndex < getNumberOfChildren(); childrenIndex++) {
+				getChildNode(childrenIndex).drawGl(gl);
+			}
 		gl.glPopMatrix();
 	}
 

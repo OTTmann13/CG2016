@@ -1,3 +1,10 @@
+/**
+* Praktikum CG, SS 2016
+* Gruppe: Steffen Schweneker (steffen.schweneker@haw-hamburg.de),
+* Jan Spijker (jan.spijker@haw-hamburg.de)
+* Aufgabe: Aufgabenblatt 1, Aufgabe 1.3
+*/
+
 package computergraphics.scenegraph;
 
 import javax.print.attribute.ResolutionSyntax;
