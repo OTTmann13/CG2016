@@ -34,5 +34,9 @@ public class RotationNode extends Node{
 		gl.glPopMatrix();
 		
 	}
+	
+	public void setAngle(double angle) {
+		this.angle = angle;
+	}
 
 }

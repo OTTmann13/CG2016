@@ -30,5 +30,9 @@ public class TranslationNode extends Node{
 			}
 		gl.glPopMatrix();
 	}
+	
+	public void setTranslation(Vector3 translate) {
+		this.translate.copy(translate);
+	}
 
 }
