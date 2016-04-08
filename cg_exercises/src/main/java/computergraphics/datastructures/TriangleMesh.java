@@ -41,18 +41,18 @@ public class TriangleMesh implements ITriangleMesh{
 
 	@Override
 	public IVertex getVertex(int index) {
-		return null;
+		return vertices.get(index);
 	}
 
 	@Override
 	public ITriangle getTriangle(int triangleIndex) {
-		// TODO Auto-generated method stub
-		return null;
+		return triangles.get(triangleIndex);
 	}
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
+		vertices.clear();
+		triangles.clear();
 		
 	}
 

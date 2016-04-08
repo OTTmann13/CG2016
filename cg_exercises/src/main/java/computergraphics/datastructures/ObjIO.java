@@ -54,7 +54,7 @@ public class ObjIO {
 
     String strLine = "";
     try {
-      InputStream is = new FileInputStream(filename);
+      InputStream is = new FileInputStream(filename + ".obj");
       DataInputStream in = new DataInputStream(is);
       BufferedReader br = new BufferedReader(new InputStreamReader(in));
       while ((strLine = br.readLine()) != null) {
@@ -62,7 +62,7 @@ public class ObjIO {
       }
       in.close();
     } catch (Exception e) {
-      System.out.println("Error reading from the OBJ file.");
+      System.out.println("Error reading from the OBJ file. " + e);
     }
 
     System.out.println("OBJ file " + filename + " with " + mesh.getNumberOfVertices() + " vertices and "
