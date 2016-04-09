@@ -11,6 +11,10 @@ public class Vertex implements IVertex{
 		this.position.copy(position);
 		this.normal.copy(normal);
 	}
+	
+	public Vertex(Vector3 position) {
+		this.position.copy(position);
+	}
 
 	@Override
 	public Vector3 getPosition() {
@@ -21,5 +25,12 @@ public class Vertex implements IVertex{
 	public Vector3 getNormal() {
 		return normal;
 	}
+	
+	@Override
+	public String toString() {
+		return new String("Vertex: " + position.get(0) + ", " + position.get(1) + ", " + position.get(2));
+		
+	}
+	
 
 }

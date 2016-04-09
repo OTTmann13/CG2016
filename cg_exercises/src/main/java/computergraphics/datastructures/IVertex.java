@@ -17,4 +17,10 @@ public interface IVertex {
    * Return normal at the vertex. Null, if no normal is available.
    */
   public Vector3 getNormal();
+  
+  /**
+   * 
+   * @return String representation of the vertex
+   */
+  public String toString();
 }

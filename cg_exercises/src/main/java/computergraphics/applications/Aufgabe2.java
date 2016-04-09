@@ -4,10 +4,8 @@ import computergraphics.datastructures.ITriangleMesh;
 import computergraphics.datastructures.ObjIO;
 import computergraphics.datastructures.TriangleMesh;
 import computergraphics.framework.AbstractCGFrame;
-import computergraphics.math.Vector3;
-import computergraphics.scenegraph.CubeNode;
-import computergraphics.scenegraph.ScaleNode;
-import computergraphics.scenegraph.SingleTriangleNode;
+import computergraphics.scenegraph.AdvancedTriangleMeshNode;
+import computergraphics.scenegraph.ShaderNode;
 import computergraphics.scenegraph.TriangleMeshNode;
 
 public class Aufgabe2 extends AbstractCGFrame{
@@ -17,19 +15,16 @@ public class Aufgabe2 extends AbstractCGFrame{
 	    ITriangleMesh mesh = new TriangleMesh();
 	    
 	    ObjIO obj = new ObjIO();
-	    obj.read("cube", mesh);
+	    obj.read("cow", mesh);
 	    
-//	    SingleTriangleNode tria = new SingleTriangleNode();
-//	    getRoot().addChild(tria);
+	    ShaderNode shader = new ShaderNode();
+	    getRoot().addChild(shader);
 	    
-//	    ScaleNode scale = new ScaleNode(new Vector3(0.5, 0.5, 0.5));
-//	    getRoot().addChild(scale);
+//	    TriangleMeshNode drawMesh = new TriangleMeshNode(mesh);
+//	    shader.addChild(drawMesh);
 	    
-	    TriangleMeshNode drawMesh = new TriangleMeshNode(mesh);
-	    getRoot().addChild(drawMesh);
-	    
-	    CubeNode cube = new CubeNode();
-	    getRoot().addChild(cube);
+	    AdvancedTriangleMeshNode drawMeshWithDisplayList = new AdvancedTriangleMeshNode(mesh);
+	    shader.addChild(drawMeshWithDisplayList);
 	}
 
 	/**

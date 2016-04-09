@@ -1,5 +1,7 @@
 package computergraphics.datastructures;
 
+import computergraphics.math.Vector3;
+
 /**
  * Parent interface for all triangles.
  * 
@@ -26,5 +28,9 @@ public interface ITriangle {
    * Return the index vertex. Valid values for i are 0,1,2.
    */
   public int getVertexIndex(int i);
+  
+  public void setNormal(Vector3 normal);
+  
+  public Vector3 getNormal();
 
 }

@@ -13,7 +13,7 @@ import computergraphics.scenegraph.ShaderNode;
 import computergraphics.scenegraph.SphereNode;
 import computergraphics.scenegraph.TranslationNode;
 
-public class HelicopterScene extends AbstractCGFrame{
+public class Aufgabe1 extends AbstractCGFrame{
 	private TranslationNode helicopterTranslation;
 	private RotationNode helicopterRotation;
 	private RotationNode rotorSpin;
@@ -77,7 +77,7 @@ public class HelicopterScene extends AbstractCGFrame{
 	 */
 	private static final long serialVersionUID = -88200910435904402L;
 	
-	public HelicopterScene(int timerInterval) {
+	public Aufgabe1(int timerInterval) {
 		super(timerInterval);
 		
 		shader = new ShaderNode();
@@ -201,7 +201,7 @@ public class HelicopterScene extends AbstractCGFrame{
 	}
 	
 	public static void main(String[] args) {
-		new HelicopterScene(100);
+		new Aufgabe1(100);
 	}
 
 }

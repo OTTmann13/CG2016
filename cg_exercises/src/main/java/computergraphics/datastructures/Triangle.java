@@ -1,10 +1,14 @@
 package computergraphics.datastructures;
 
+import computergraphics.math.Vector3;
+
 public class Triangle implements ITriangle{
 	
 	private int vertexIndexA;
 	private int vertexIndexB;
 	private int vertexIndexC;
+	
+	private final Vector3 normal = new Vector3();
 	
 	public Triangle(int vertexIndexA, int vertexIndexB, int vertexIndexC) {
 		this.vertexIndexA = vertexIndexA;
@@ -31,6 +35,14 @@ public class Triangle implements ITriangle{
 	public int getVertexIndex(int i) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	public void setNormal(Vector3 normal) {
+		this.normal.copy(normal);
+	}
+	
+	public Vector3 getNormal() {
+		return normal;
 	}
 
 }

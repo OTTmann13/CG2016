@@ -87,7 +87,7 @@ public class ObjIO {
       // Lesen einer Facette (Dreieck)
       int[] t = parseFace(line);
       if (t != null) {
-        // System.out.println("Dreieck: " + t);
+         //System.out.println("Dreieck: " + t);
         mesh.addTriangle(t[0], t[1], t[2]);
       }
     } else if (operator.equals("vt")) {

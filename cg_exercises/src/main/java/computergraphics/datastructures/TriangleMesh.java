@@ -13,6 +13,7 @@ public class TriangleMesh implements ITriangleMesh{
 	@Override
 	public void addTriangle(int vertexIndex1, int vertexIndex2, int vertexIndex3) {
 		ITriangle triangle = new Triangle(vertexIndex1, vertexIndex2, vertexIndex3);
+		calcTriangleNormal(triangle);
 		triangles.add(triangle);
 	}
 
@@ -24,7 +25,7 @@ public class TriangleMesh implements ITriangleMesh{
 
 	@Override
 	public int addVertex(Vector3 position) {
-		IVertex vertex = new Vertex(position, position);
+		IVertex vertex = new Vertex(position);
 		vertices.add(vertex);
 		return vertices.indexOf(vertex);
 	}
@@ -60,6 +61,19 @@ public class TriangleMesh implements ITriangleMesh{
 	public void setTextureFilename(String textureFilename) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	private void calcTriangleNormal(ITriangle triangle) {
+		Vector3 vertexA = vertices.get(triangle.getVertexIndexA()).getPosition();
+		Vector3 vertexB = vertices.get(triangle.getVertexIndexB()).getPosition();
+		Vector3 vertexC = vertices.get(triangle.getVertexIndexC()).getPosition();
+		
+		Vector3 vectorAB = vertexB.subtract(vertexA);
+		Vector3 vectorAC = vertexC.subtract(vertexA);
+		
+		Vector3 normalVector = vectorAB.cross(vectorAC).getNormalized();
+		
+		triangle.setNormal(normalVector);
 	}
 
 }
