@@ -4,8 +4,11 @@ import computergraphics.datastructures.ITriangleMesh;
 import computergraphics.datastructures.ObjIO;
 import computergraphics.datastructures.TriangleMesh;
 import computergraphics.framework.AbstractCGFrame;
+import computergraphics.math.Vector3;
 import computergraphics.scenegraph.AdvancedTriangleMeshNode;
+import computergraphics.scenegraph.ScaleNode;
 import computergraphics.scenegraph.ShaderNode;
+import computergraphics.scenegraph.TranslationNode;
 import computergraphics.scenegraph.TriangleMeshNode;
 
 public class Aufgabe2 extends AbstractCGFrame{
@@ -15,7 +18,7 @@ public class Aufgabe2 extends AbstractCGFrame{
 	    ITriangleMesh mesh = new TriangleMesh();
 	    
 	    ObjIO obj = new ObjIO();
-	    obj.read("cow", mesh);
+	    obj.read("Sonic", mesh);
 	    
 	    ShaderNode shader = new ShaderNode();
 	    getRoot().addChild(shader);
@@ -23,8 +26,14 @@ public class Aufgabe2 extends AbstractCGFrame{
 //	    TriangleMeshNode drawMesh = new TriangleMeshNode(mesh);
 //	    shader.addChild(drawMesh);
 	    
+	    ScaleNode scale = new ScaleNode(new Vector3(0.1, 0.1, 0.1));
+	    shader.addChild(scale);
+	    
+	    TranslationNode translate = new TranslationNode(new Vector3(0.0, -13.0, 0.0));
+	    scale.addChild(translate);
+	    
 	    AdvancedTriangleMeshNode drawMeshWithDisplayList = new AdvancedTriangleMeshNode(mesh);
-	    shader.addChild(drawMeshWithDisplayList);
+	    translate.addChild(drawMeshWithDisplayList);
 	}
 
 	/**
