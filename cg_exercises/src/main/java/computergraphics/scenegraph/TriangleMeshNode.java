@@ -17,7 +17,7 @@ public class TriangleMeshNode extends Node{
 	@Override
 	public void drawGl(GL2 gl) {
 		gl.glBegin(GL2.GL_TRIANGLES);
-		gl.glColor3d(1, 0, 0);
+		//gl.glColor3d(1, 0, 0);
 			for(int i = 0; i < mesh.getNumberOfTriangles(); i++) {
 					
 				ITriangle triangle = mesh.getTriangle(i);

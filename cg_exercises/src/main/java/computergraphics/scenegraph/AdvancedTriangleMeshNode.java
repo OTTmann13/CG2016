@@ -9,7 +9,7 @@ import computergraphics.datastructures.IVertex;
 public class AdvancedTriangleMeshNode extends Node{
 	private final ITriangleMesh mesh;
 	private int displayList;
-	private boolean objectRendered = false;
+	private boolean objectCreated = false;
 	
 	public AdvancedTriangleMeshNode(ITriangleMesh mesh) {
 		this.mesh = mesh;
@@ -17,11 +17,15 @@ public class AdvancedTriangleMeshNode extends Node{
 
 	@Override
 	public void drawGl(GL2 gl) {
-		if(!objectRendered) {
+		//make sure the displaylist is only created once
+		if(!objectCreated) {
 			displayList = gl.glGenLists(1);
+			//create a new displaylist
 			gl.glNewList(displayList, GL2.GL_COMPILE);
+			
+			//creating the model
 			gl.glBegin(GL2.GL_TRIANGLES);
-			gl.glColor3d(0, 1, 0);
+			//gl.glColor3d(0, 1, 0);
 				for(int i = 0; i < mesh.getNumberOfTriangles(); i++) {
 					
 					ITriangle triangle = mesh.getTriangle(i);
@@ -38,8 +42,9 @@ public class AdvancedTriangleMeshNode extends Node{
 			
 			gl.glEnd();
 			gl.glEndList();
-			objectRendered = true;
+			objectCreated = true;
 		}else{
+			//call the displaylist
 			gl.glCallList(displayList);
 		}
 	}

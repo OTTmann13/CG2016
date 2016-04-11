@@ -6,8 +6,10 @@ import computergraphics.datastructures.TriangleMesh;
 import computergraphics.framework.AbstractCGFrame;
 import computergraphics.math.Vector3;
 import computergraphics.scenegraph.AdvancedTriangleMeshNode;
+import computergraphics.scenegraph.ColorNode;
 import computergraphics.scenegraph.ScaleNode;
 import computergraphics.scenegraph.ShaderNode;
+import computergraphics.scenegraph.ShaderNode.ShaderType;
 import computergraphics.scenegraph.TranslationNode;
 import computergraphics.scenegraph.TriangleMeshNode;
 
@@ -20,18 +22,27 @@ public class Aufgabe2 extends AbstractCGFrame{
 	    ObjIO obj = new ObjIO();
 	    obj.read("Sonic", mesh);
 	    
-	    ShaderNode shader = new ShaderNode();
+	    //Create shaderNode for lightning the model
+	    ShaderNode shader = new ShaderNode(ShaderType.PHONG);
 	    getRoot().addChild(shader);
 	    
-//	    TriangleMeshNode drawMesh = new TriangleMeshNode(mesh);
-//	    shader.addChild(drawMesh);
-	    
+	    //Create scaleNode for scaling the model
 	    ScaleNode scale = new ScaleNode(new Vector3(0.1, 0.1, 0.1));
 	    shader.addChild(scale);
 	    
-	    TranslationNode translate = new TranslationNode(new Vector3(0.0, -13.0, 0.0));
-	    scale.addChild(translate);
+	    //Create colorNode for coloring the model
+	    ColorNode color = new ColorNode(0.24, 0.25, 0.88);
+	    scale.addChild(color);
 	    
+	    //Create translationNode for moving the model
+	    TranslationNode translate = new TranslationNode(new Vector3(0.0, -13.0, 0.0));
+	    color.addChild(translate);
+	    
+//	    //triangleMeshNode for creating the object without displaylists
+//	    TriangleMeshNode drawMesh = new TriangleMeshNode(mesh);
+//	    color.addChild(drawMesh);
+	    
+	  //triangleMeshNode for creating the object with displaylists
 	    AdvancedTriangleMeshNode drawMeshWithDisplayList = new AdvancedTriangleMeshNode(mesh);
 	    translate.addChild(drawMeshWithDisplayList);
 	}

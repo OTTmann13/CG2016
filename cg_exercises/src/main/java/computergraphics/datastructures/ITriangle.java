@@ -29,8 +29,16 @@ public interface ITriangle {
    */
   public int getVertexIndex(int i);
   
+  /**
+   * Set the normal-vector of this triangle
+   * @param normal
+   */
   public void setNormal(Vector3 normal);
   
+  /**
+   * 
+   * @return the normal-vector
+   */
   public Vector3 getNormal();
 
 }
