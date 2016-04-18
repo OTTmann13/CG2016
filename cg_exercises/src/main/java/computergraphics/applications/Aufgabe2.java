@@ -20,7 +20,7 @@ public class Aufgabe2 extends AbstractCGFrame{
 	    ITriangleMesh mesh = new TriangleMesh();
 	    
 	    ObjIO obj = new ObjIO();
-	    obj.read("Sonic", mesh);
+	    obj.read("hemisphere", mesh);
 	    
 	    //Create shaderNode for lightning the model
 	    ShaderNode shader = new ShaderNode(ShaderType.PHONG);
@@ -38,13 +38,13 @@ public class Aufgabe2 extends AbstractCGFrame{
 	    TranslationNode translate = new TranslationNode(new Vector3(0.0, -13.0, 0.0));
 	    color.addChild(translate);
 	    
-//	    //triangleMeshNode for creating the object without displaylists
-//	    TriangleMeshNode drawMesh = new TriangleMeshNode(mesh);
-//	    shader.addChild(drawMesh);
+	    //triangleMeshNode for creating the object without displaylists
+	    TriangleMeshNode drawMesh = new TriangleMeshNode(mesh);
+	    shader.addChild(drawMesh);
 	    
-	  //triangleMeshNode for creating the object with displaylists
-	    AdvancedTriangleMeshNode drawMeshWithDisplayList = new AdvancedTriangleMeshNode(mesh);
-	    translate.addChild(drawMeshWithDisplayList);
+//	  //triangleMeshNode for creating the object with displaylists
+//	    AdvancedTriangleMeshNode drawMeshWithDisplayList = new AdvancedTriangleMeshNode(mesh);
+//	    translate.addChild(drawMeshWithDisplayList);
 	}
 
 	/**

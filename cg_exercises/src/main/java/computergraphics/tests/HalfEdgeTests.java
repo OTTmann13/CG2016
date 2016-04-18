@@ -66,7 +66,7 @@ public class HalfEdgeTests {
 	public void halfEdgeTest() {
 		HalfEdge edgeA = mesh.getHalfEdges().get(3);
 		HalfEdge edgeB = mesh.getHalfEdges().get(4);
-		HalfEdge edgeC = mesh.getHalfEdges().get(2);
+		HalfEdge edgeC = mesh.getHalfEdges().get(5);
 		
 		assertEquals(edgeA.getNext(), edgeB);
 		assertEquals(edgeB.getNext(), edgeC);
@@ -75,6 +75,10 @@ public class HalfEdgeTests {
 	
 	@Test
 	public void oppositeTest() {
+		HalfEdge edgeA = mesh.getHalfEdges().get(2);
+		HalfEdge edgeB = mesh.getHalfEdges().get(3);
+		
+		assertEquals(edgeA.getOpposite(), edgeB);
 	}
 
 }
