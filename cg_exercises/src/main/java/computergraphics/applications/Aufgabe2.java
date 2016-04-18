@@ -40,7 +40,7 @@ public class Aufgabe2 extends AbstractCGFrame{
 	    
 //	    //triangleMeshNode for creating the object without displaylists
 //	    TriangleMeshNode drawMesh = new TriangleMeshNode(mesh);
-//	    color.addChild(drawMesh);
+//	    shader.addChild(drawMesh);
 	    
 	  //triangleMeshNode for creating the object with displaylists
 	    AdvancedTriangleMeshNode drawMeshWithDisplayList = new AdvancedTriangleMeshNode(mesh);

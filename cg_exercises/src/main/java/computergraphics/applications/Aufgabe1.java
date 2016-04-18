@@ -201,7 +201,7 @@ public class Aufgabe1 extends AbstractCGFrame{
 	}
 	
 	public static void main(String[] args) {
-		new Aufgabe1(100);
+		new Aufgabe1(500);
 	}
 
 }
