@@ -63,6 +63,6 @@ public class HalfEdge {
 
   @Override
   public String toString() {
-    return "Half Edge";
+    return "Half Edge start at: " + startVertex.getPosition();
   }
 }

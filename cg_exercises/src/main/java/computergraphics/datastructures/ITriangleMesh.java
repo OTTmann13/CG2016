@@ -6,6 +6,9 @@
  */
 package computergraphics.datastructures;
 
+import java.util.List;
+
+import computergraphics.datastructures.halfedge.HalfEdge;
 import computergraphics.math.Vector3;
 
 /**
@@ -87,4 +90,6 @@ public interface ITriangleMesh {
    * Set the filename of the used texture.
    */
   public void setTextureFilename(String textureFilename);
+  
+  public List<HalfEdge> getHalfEdges();
 }

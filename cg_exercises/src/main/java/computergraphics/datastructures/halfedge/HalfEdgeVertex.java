@@ -105,4 +105,12 @@ public class HalfEdgeVertex implements IVertex {
   public String toString() {
     return "Vertex";
   }
+  
+  public boolean equals(Object o) {
+	  if(o instanceof HalfEdgeVertex) {
+		return this.position.equals(((HalfEdgeVertex) o).position);
+	  }
+	return false;
+	  
+  }
 }

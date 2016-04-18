@@ -3,6 +3,7 @@ package computergraphics.datastructures;
 import java.util.ArrayList;
 import java.util.List;
 
+import computergraphics.datastructures.halfedge.HalfEdge;
 import computergraphics.math.Vector3;
 
 public class TriangleMesh implements ITriangleMesh{
@@ -133,6 +134,12 @@ public class TriangleMesh implements ITriangleMesh{
 		Vector3 normalVector = vectorAB.cross(vectorAC).getNormalized();
 		
 		triangle.setNormal(normalVector);
+	}
+
+	@Override
+	public List<HalfEdge> getHalfEdges() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
