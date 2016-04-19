@@ -7,7 +7,9 @@ import computergraphics.datastructures.ObjIO;
 import computergraphics.datastructures.halfedge.HalfEdgeTriangleMesh;
 import computergraphics.framework.AbstractCGFrame;
 import computergraphics.scenegraph.ColorNode;
-import computergraphics.scenegraph.HalfEdgeTriangleNode;
+import computergraphics.scenegraph.HalfEdgeOutlineNode;
+import computergraphics.scenegraph.TriangleNormalHalfEdgeTriangleNode;
+import computergraphics.scenegraph.VertexNormalHalfEdgeTriangleNode;
 import computergraphics.scenegraph.ShaderNode;
 import computergraphics.scenegraph.ShaderNode.ShaderType;
 
@@ -25,14 +27,26 @@ public class Aufgabe3 extends AbstractCGFrame{
 		ObjIO obj = new ObjIO();
 		obj.read("hemisphere", mesh);
 		
+		mesh.setAdditionalInformations();
+		mesh.calculateVertexNormal();
+		
 		ShaderNode shader = new ShaderNode(ShaderType.PHONG);
 		getRoot().addChild(shader);
 		
-		ColorNode color = new ColorNode(1.0, 0.0, 0.0);
+		ColorNode color = new ColorNode(0.0, 0.0, 1.0);
 		shader.addChild(color);
 		
-		HalfEdgeTriangleNode triangleNode = new HalfEdgeTriangleNode(mesh);
+		ColorNode outlineColor = new ColorNode(0.0, 0.0, 0.0);
+		shader.addChild(outlineColor);
+		
+		HalfEdgeOutlineNode outline = new HalfEdgeOutlineNode(mesh);
+		outlineColor.addChild(outline);
+		
+		VertexNormalHalfEdgeTriangleNode triangleNode = new VertexNormalHalfEdgeTriangleNode(mesh);
 		color.addChild(triangleNode);
+		
+//		TriangleNormalHalfEdgeTriangleNode triangleNode = new TriangleNormalHalfEdgeTriangleNode(mesh);
+//		color.addChild(triangleNode);
 	}
 
 	@Override

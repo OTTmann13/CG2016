@@ -8,12 +8,12 @@ import computergraphics.datastructures.IVertex;
 import computergraphics.datastructures.halfedge.HalfEdge;
 import computergraphics.datastructures.halfedge.HalfEdgeTriangle;
 
-public class HalfEdgeTriangleNode extends Node {
+public class TriangleNormalHalfEdgeTriangleNode extends Node {
 	ITriangleMesh mesh;
 	private boolean objectCreated = false;
 	private int displayList;
 	
-	public HalfEdgeTriangleNode(ITriangleMesh mesh) {
+	public TriangleNormalHalfEdgeTriangleNode(ITriangleMesh mesh) {
 		this.mesh = mesh;
 	}
 

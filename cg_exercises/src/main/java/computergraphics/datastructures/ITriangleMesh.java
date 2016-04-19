@@ -92,4 +92,8 @@ public interface ITriangleMesh {
   public void setTextureFilename(String textureFilename);
   
   public List<HalfEdge> getHalfEdges();
+  
+  public void setAdditionalInformations();
+  
+  public void calculateVertexNormal();
 }

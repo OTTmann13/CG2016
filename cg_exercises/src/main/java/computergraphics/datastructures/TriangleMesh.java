@@ -142,4 +142,16 @@ public class TriangleMesh implements ITriangleMesh{
 		return null;
 	}
 
+	@Override
+	public void setAdditionalInformations() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void calculateVertexNormal() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

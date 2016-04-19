@@ -48,7 +48,7 @@ public class HalfEdgeTriangleMesh implements ITriangleMesh{
 		halfEdgeTriangles.add(halfEdgeTriangle);
 		
 		calculateTriangleNormal(halfEdgeTriangle);
-		setAdditionalInformations();
+//		setAdditionalInformations();
 	}
 
 	  /**
@@ -167,13 +167,52 @@ public class HalfEdgeTriangleMesh implements ITriangleMesh{
 		triangle.setNormal(normalVector);
 	}
 	
-	private void setAdditionalInformations() {
-		for(HalfEdgeVertex halfEdgeVertex : halfEdgeVertices) {
-			for(HalfEdge e : halfEdges) {
-				if(e.getStartVertex().equals(halfEdgeVertex)) {
-					halfEdgeVertex.setHalfEgde(e);
-					break;
+	public void calculateVertexNormal() {
+		Vector3 summTriangleNormal = new Vector3(0,0,0);
+		for(HalfEdgeVertex vertex : halfEdgeVertices) {
+			//Get the start edge
+			HalfEdge startEdge = vertex.getHalfEdge();
+			
+			//Get the normal of the first triangle
+			summTriangleNormal = startEdge.getFacet().getNormal();
+			
+			//Set current edge of the next edge
+			if(vertex.getHalfEdge().getOpposite() != null) {
+				HalfEdge currentEdge = vertex.getHalfEdge().getOpposite().getNext();
+				
+				if(currentEdge.getOpposite() != null) {
+					//Search all adjacent triangles and add all normals
+					while(startEdge != currentEdge) {
+						summTriangleNormal.add(currentEdge.getFacet().getNormal());
+						currentEdge = currentEdge.getOpposite().getNext();
+					}
+					
+					//Normalize the sum of all triangle normals
+					Vector3 normilizedVertexVector =  summTriangleNormal.getNormalized();
+					
+					//Set the vector to a vertex
+					vertex.setNormal(normilizedVertexVector);
 				}
+			}
+		}
+	}
+	
+	public void setAdditionalInformations() {
+		int count = 0;
+//		for(HalfEdgeVertex halfEdgeVertex : halfEdgeVertices) {
+//			for(HalfEdge e : halfEdges) {
+//				if(e.getStartVertex().equals(halfEdgeVertex)) {
+//					count++;
+//					halfEdgeVertex.setHalfEgde(e);
+//					break;
+//				}
+//			}
+//		}
+		
+		for(HalfEdge e :  halfEdges) {
+			HalfEdgeVertex vertex = e.getStartVertex();
+			if(vertex.getHalfEdge() == null) {
+				vertex.setHalfEgde(e);
 			}
 		}
 		
@@ -184,11 +223,11 @@ public class HalfEdgeTriangleMesh implements ITriangleMesh{
 			for(HalfEdge oppositeEdge : halfEdges) {
 				if(oppositeEdge.getStartVertex().equals(v2) && oppositeEdge.getNext().getStartVertex().equals(v1)) {
 					halfEdge.setOpposite(oppositeEdge);
+					count++;
 				}
 			}
 		}
-		
-		
+		System.out.println(count);
 	}
 	
 	public List<HalfEdge> getHalfEdges() {

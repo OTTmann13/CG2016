@@ -20,7 +20,7 @@ public class Aufgabe2 extends AbstractCGFrame{
 	    ITriangleMesh mesh = new TriangleMesh();
 	    
 	    ObjIO obj = new ObjIO();
-	    obj.read("hemisphere", mesh);
+	    obj.read("Sonic", mesh);
 	    
 	    //Create shaderNode for lightning the model
 	    ShaderNode shader = new ShaderNode(ShaderType.PHONG);
