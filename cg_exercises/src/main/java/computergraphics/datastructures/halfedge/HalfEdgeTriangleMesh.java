@@ -25,10 +25,15 @@ public class HalfEdgeTriangleMesh implements ITriangleMesh{
 	public void addTriangle(int vertexIndex1, int vertexIndex2, int vertexIndex3) {
 		HalfEdgeTriangle halfEdgeTriangle = new HalfEdgeTriangle();	
 		
+		//Create 3 edges forming the triangle
 		HalfEdge halfEdge1 = new HalfEdge();
 		HalfEdge halfEdge2 = new HalfEdge();
 		HalfEdge halfEdge3 = new HalfEdge();
 		
+		//Set information for the half-edges
+		//Information:
+		//appropriate triangle
+		//next half-edge
 		halfEdge1.setFacet(halfEdgeTriangle);
 		halfEdge1.setStartVertex(halfEdgeVertices.get(vertexIndex1));
 		halfEdge1.setNext(halfEdge2);
@@ -44,11 +49,14 @@ public class HalfEdgeTriangleMesh implements ITriangleMesh{
 		halfEdge3.setNext(halfEdge1);
 		halfEdges.add(halfEdge3);
 		
+		//Set informations for the triangle
+		//Information:
+		//one half-edge of the triangle
 		halfEdgeTriangle.setHalfEdge(halfEdge1);	
 		halfEdgeTriangles.add(halfEdgeTriangle);
 		
+		//Calculate and set the triangle-normal
 		calculateTriangleNormal(halfEdgeTriangle);
-//		setAdditionalInformations();
 	}
 
 	  /**
@@ -159,9 +167,11 @@ public class HalfEdgeTriangleMesh implements ITriangleMesh{
 		currentEdge = currentEdge.getNext();
 		Vector3 vertexC = currentEdge.getStartVertex().getPosition();
 		
+		//Calculate two vectors of the triangle
 		Vector3 vectorAB = vertexB.subtract(vertexA);
 		Vector3 vectorAC = vertexC.subtract(vertexA);
 		
+		//Calculate the normal and normalize it
 		Vector3 normalVector = vectorAB.cross(vectorAC).getNormalized();
 		
 		triangle.setNormal(normalVector);
@@ -176,10 +186,12 @@ public class HalfEdgeTriangleMesh implements ITriangleMesh{
 			//Get the normal of the first triangle
 			summTriangleNormal = startEdge.getFacet().getNormal();
 			
-			//Set current edge of the next edge
+			//Check if the edge is a margin-edge
 			if(vertex.getHalfEdge().getOpposite() != null) {
+				//Set current edge of the next edge
 				HalfEdge currentEdge = vertex.getHalfEdge().getOpposite().getNext();
 				
+				//Check if the edge is a margin-edge
 				if(currentEdge.getOpposite() != null) {
 					//Search all adjacent triangles and add all normals
 					while(startEdge != currentEdge) {
@@ -198,17 +210,8 @@ public class HalfEdgeTriangleMesh implements ITriangleMesh{
 	}
 	
 	public void setAdditionalInformations() {
-		int count = 0;
-//		for(HalfEdgeVertex halfEdgeVertex : halfEdgeVertices) {
-//			for(HalfEdge e : halfEdges) {
-//				if(e.getStartVertex().equals(halfEdgeVertex)) {
-//					count++;
-//					halfEdgeVertex.setHalfEgde(e);
-//					break;
-//				}
-//			}
-//		}
-		
+		//Add a half-edge to every vertex
+		//Search all half-edges and set the edge to a vertex
 		for(HalfEdge e :  halfEdges) {
 			HalfEdgeVertex vertex = e.getStartVertex();
 			if(vertex.getHalfEdge() == null) {
@@ -217,17 +220,17 @@ public class HalfEdgeTriangleMesh implements ITriangleMesh{
 		}
 		
 		for(HalfEdge halfEdge : halfEdges) {
+			//get v1 and v2 of a half-edge
 			HalfEdgeVertex v1 = halfEdge.getStartVertex();
 			HalfEdgeVertex v2 = halfEdge.getNext().getStartVertex();
 			
+			//search all half-edges for an edge leading v2 -> v1
 			for(HalfEdge oppositeEdge : halfEdges) {
 				if(oppositeEdge.getStartVertex().equals(v2) && oppositeEdge.getNext().getStartVertex().equals(v1)) {
 					halfEdge.setOpposite(oppositeEdge);
-					count++;
 				}
 			}
 		}
-		System.out.println(count);
 	}
 	
 	public List<HalfEdge> getHalfEdges() {

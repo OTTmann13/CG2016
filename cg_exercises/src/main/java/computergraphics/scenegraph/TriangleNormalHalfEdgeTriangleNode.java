@@ -8,6 +8,10 @@ import computergraphics.datastructures.IVertex;
 import computergraphics.datastructures.halfedge.HalfEdge;
 import computergraphics.datastructures.halfedge.HalfEdgeTriangle;
 
+/*
+ * Node to draw a given trianglemesh using half-edge datastructure.
+ * The displayed object using triangle normals
+ */
 public class TriangleNormalHalfEdgeTriangleNode extends Node {
 	ITriangleMesh mesh;
 	private boolean objectCreated = false;

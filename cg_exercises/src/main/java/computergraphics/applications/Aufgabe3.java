@@ -25,7 +25,7 @@ public class Aufgabe3 extends AbstractCGFrame{
 		ITriangleMesh mesh = new HalfEdgeTriangleMesh();
 		
 		ObjIO obj = new ObjIO();
-		obj.read("hemisphere", mesh);
+		obj.read("cow", mesh);
 		
 		mesh.setAdditionalInformations();
 		mesh.calculateVertexNormal();
@@ -39,8 +39,8 @@ public class Aufgabe3 extends AbstractCGFrame{
 		ColorNode outlineColor = new ColorNode(0.0, 0.0, 0.0);
 		shader.addChild(outlineColor);
 		
-		HalfEdgeOutlineNode outline = new HalfEdgeOutlineNode(mesh);
-		outlineColor.addChild(outline);
+//		HalfEdgeOutlineNode outline = new HalfEdgeOutlineNode(mesh);
+//		outlineColor.addChild(outline);
 		
 		VertexNormalHalfEdgeTriangleNode triangleNode = new VertexNormalHalfEdgeTriangleNode(mesh);
 		color.addChild(triangleNode);

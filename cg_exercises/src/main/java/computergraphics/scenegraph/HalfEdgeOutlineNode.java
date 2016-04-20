@@ -6,6 +6,9 @@ import computergraphics.datastructures.ITriangleMesh;
 import computergraphics.datastructures.halfedge.HalfEdge;
 import computergraphics.datastructures.halfedge.HalfEdgeVertex;
 
+/*
+ * Node to draw the outline of a given trianglemesh
+ */
 public class HalfEdgeOutlineNode extends Node{
 	
 	private ITriangleMesh mesh;

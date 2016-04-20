@@ -6,6 +6,9 @@ import computergraphics.datastructures.ITriangle;
 import computergraphics.datastructures.ITriangleMesh;
 import computergraphics.datastructures.IVertex;
 
+/*
+ * Node to draw a trianglemesh
+ */
 public class TriangleMeshNode extends Node{
 	
 	private final ITriangleMesh mesh;
