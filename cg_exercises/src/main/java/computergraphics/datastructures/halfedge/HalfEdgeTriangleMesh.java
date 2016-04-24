@@ -29,7 +29,6 @@ public class HalfEdgeTriangleMesh implements ITriangleMesh{
 		HalfEdge halfEdge1 = new HalfEdge();
 		HalfEdge halfEdge2 = new HalfEdge();
 		HalfEdge halfEdge3 = new HalfEdge();
-		
 		//Set information for the half-edges
 		//Information:
 		//appropriate triangle

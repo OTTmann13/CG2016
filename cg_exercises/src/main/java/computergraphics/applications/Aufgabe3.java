@@ -6,11 +6,14 @@ import computergraphics.datastructures.ITriangleMesh;
 import computergraphics.datastructures.ObjIO;
 import computergraphics.datastructures.halfedge.HalfEdgeTriangleMesh;
 import computergraphics.framework.AbstractCGFrame;
+import computergraphics.math.Vector3;
 import computergraphics.scenegraph.ColorNode;
 import computergraphics.scenegraph.HalfEdgeOutlineNode;
+import computergraphics.scenegraph.ScaleNode;
 import computergraphics.scenegraph.TriangleNormalHalfEdgeTriangleNode;
 import computergraphics.scenegraph.VertexNormalHalfEdgeTriangleNode;
 import computergraphics.scenegraph.ShaderNode;
+import computergraphics.scenegraph.TranslationNode;
 import computergraphics.scenegraph.ShaderNode.ShaderType;
 
 public class Aufgabe3 extends AbstractCGFrame{
@@ -25,7 +28,7 @@ public class Aufgabe3 extends AbstractCGFrame{
 		ITriangleMesh mesh = new HalfEdgeTriangleMesh();
 		
 		ObjIO obj = new ObjIO();
-		obj.read("cow", mesh);
+		obj.read("sphere", mesh);
 		
 		mesh.setAdditionalInformations();
 		mesh.calculateVertexNormal();
@@ -36,11 +39,11 @@ public class Aufgabe3 extends AbstractCGFrame{
 		ColorNode color = new ColorNode(0.0, 0.0, 1.0);
 		shader.addChild(color);
 		
-		ColorNode outlineColor = new ColorNode(0.0, 0.0, 0.0);
-		shader.addChild(outlineColor);
+		ColorNode outlineColor = new ColorNode(1.0, 0.0, 0.0);
+		getRoot().addChild(outlineColor);
 		
-//		HalfEdgeOutlineNode outline = new HalfEdgeOutlineNode(mesh);
-//		outlineColor.addChild(outline);
+		HalfEdgeOutlineNode outline = new HalfEdgeOutlineNode(mesh);
+		outlineColor.addChild(outline);
 		
 		VertexNormalHalfEdgeTriangleNode triangleNode = new VertexNormalHalfEdgeTriangleNode(mesh);
 		color.addChild(triangleNode);
