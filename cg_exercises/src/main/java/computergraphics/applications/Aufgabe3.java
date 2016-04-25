@@ -28,7 +28,7 @@ public class Aufgabe3 extends AbstractCGFrame{
 		ITriangleMesh mesh = new HalfEdgeTriangleMesh();
 		
 		ObjIO obj = new ObjIO();
-		obj.read("sphere", mesh);
+		obj.read("hemisphere", mesh);
 		
 		mesh.setAdditionalInformations();
 		mesh.calculateVertexNormal();
