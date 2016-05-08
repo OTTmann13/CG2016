@@ -22,23 +22,29 @@ public class Aufgabe4 extends AbstractCGFrame{
 	 * 
 	 */
 	private static final long serialVersionUID = -5627500506044803004L;
+	
 	private static int faces[];
 	private static List<List<Vector3>> pointsList = new ArrayList<>();
 	private static List<List<Double>> valuesList = new ArrayList<>();
 	private static Map<Integer, List<Integer>> edgeMap = new HashMap<Integer, List<Integer>>();
-	
-	private final int ISOWERT = 6;
 	private static ITriangleMesh mesh = new TriangleMesh();
+	
+	private final int ISOWERT = 0;
+	private final double CUBERESOLUTION = 0.1;
+	private final double MATRIX_INTERVAL_MIN = -2;
+	private final double MATRIX_INTERVAL_MAX = 2;
+	
 	private int cubeNumber = 0;
+	private int triangleNumber = 0;
+	
 	
 	public Aufgabe4(int timerInterval) {
 		super(timerInterval);
 		
-		ceateCube(0, 0.5);
-		ceateCube(0.5, 1);
-		ceateCube(0, 1);
-		ceateCube(1.0, 1.5);
-		ceateCube(0, 1.5);
+
+		createMatrix(MATRIX_INTERVAL_MIN, MATRIX_INTERVAL_MAX, CUBERESOLUTION);
+
+		
 		while(cubeNumber < pointsList.size()) {
 			createTriangles(pointsList.get(cubeNumber), valuesList.get(cubeNumber));
 			cubeNumber++;
@@ -55,17 +61,17 @@ public class Aufgabe4 extends AbstractCGFrame{
 		ColorNode shpereColor = new ColorNode(0, 0, 1);
 		shader.addChild(shpereColor);
 		
-		for(List<Vector3> points : pointsList) {
-			SquareNode square = new SquareNode(points);
-			squareColor.addChild(square);
-			for(Vector3 point : points) {
-				SphereNode shpere = new SphereNode(0.05, 20);
-				TranslationNode translateSphere = new TranslationNode(point);
-				translateSphere.addChild(shpere);
-				shpereColor.addChild(translateSphere);
-			}
-		}
-//		
+//		for(List<Vector3> points : pointsList) {
+//			SquareNode square = new SquareNode(points);
+//			squareColor.addChild(square);
+//			for(Vector3 point : points) {
+//				SphereNode shpere = new SphereNode(0.05, 20);
+//				TranslationNode translateSphere = new TranslationNode(point);
+//				translateSphere.addChild(shpere);
+//				shpereColor.addChild(translateSphere);
+//			}
+//		}
+		
 		ColorNode triangleColor = new ColorNode(1, 0, 0);
 		shader.addChild(triangleColor);
 		
@@ -110,42 +116,46 @@ public class Aufgabe4 extends AbstractCGFrame{
 		int indexBegin = caseIndex * 15;
 		int indexEnd = (caseIndex + 1) * 15 - 1;
 		
-		List<Integer> edges = new ArrayList<Integer>();
+		ArrayList<Integer> edgeList = new ArrayList<Integer>();
 		while(indexBegin <= indexEnd) {
 			int edge = faces[indexBegin];
 			if(edge != -1) {
-				edges.add(edge);
+				edgeList.add(edge);
+				
 				Vector3 vertex1 = points.get(edgeMap.get(edge).get(0));
 				Vector3 vertex2 = points.get(edgeMap.get(edge).get(1));
-				System.out.println(points.indexOf(vertex1));
+				
 				double v1 = values.get(points.indexOf(vertex1));
 				double v2 = values.get(points.indexOf(vertex2));
 				double t = (ISOWERT - v1) / (v2 - v1);
-				Vector3 p = vertex1.multiply((1 - t)).add(vertex2.multiply(t)); 
-	
-//				Vector3 newVertex = vertex1.add(vertex2).multiply(0.5);
+				Vector3 tmp = vertex1.multiply((1 - t));
+				Vector3 tmp2 = vertex2.multiply(t);
+				Vector3 p = tmp.add(tmp2); 
+				
+//				Vector3 p = vertex1.add(vertex2).multiply(0.5);
 				mesh.addVertex(p);
 			}
 			indexBegin++;
 		}
 		
-		for(int i = 0; i < edges.size(); i += 3) {
-			mesh.addTriangle(cubeNumber, cubeNumber + 1, cubeNumber + 2);
+		for(int i = 0; i < edgeList.size(); i += 3) {
+			mesh.addTriangle(triangleNumber * 3, (triangleNumber * 3) + 1, (triangleNumber * 3) + 2);
+			triangleNumber++;
 		}
 	}
 	
-	private void ceateCube(double max, double min) {
+	private void ceateCube(double x, double y, double z, double t) {
 		List<Vector3> points = new ArrayList<Vector3>();
 		List<Double> values = new ArrayList<Double>();
 		
-		Vector3 vector1 = new Vector3(min, min, min);
-		Vector3 vector2 = new Vector3(max, min, min);
-		Vector3 vector3 = new Vector3(max, max, min);
-		Vector3 vector4 = new Vector3(min, max, min);
-		Vector3 vector5 = new Vector3(min, min, max);
-		Vector3 vector6 = new Vector3(max, min, max);
-		Vector3 vector7 = new Vector3(max, max, max);
-		Vector3 vector8 = new Vector3(min, max, max);
+		Vector3 vector1 = new Vector3(x, y, z);
+		Vector3 vector2 = new Vector3(x + t, y, z);
+		Vector3 vector3 = new Vector3(x + t, y + t, z);
+		Vector3 vector4 = new Vector3(x, y + t, z);
+		Vector3 vector5 = new Vector3(x, y, z + t);
+		Vector3 vector6 = new Vector3(x + t, y, z + t);
+		Vector3 vector7 = new Vector3(x + t, y + t, z + t);
+		Vector3 vector8 = new Vector3(x, y + t, z + t);
 		
 		points.add(vector1);
 		points.add(vector2);
@@ -156,14 +166,26 @@ public class Aufgabe4 extends AbstractCGFrame{
 		points.add(vector7);
 		points.add(vector8);
 		
-		double value1 = 5;
-		double value2 = 3;
-		double value3 = 2;
-		double value4 = 7;
-		double value5 = 0;
-		double value6 = 0;
-		double value7 = 0;
-		double value8 = 0;
+		double r = 1;
+		double rr = 4;
+		
+//		double value1 = kugel(vector1.get(0), vector1.get(1), vector1.get(2), r);
+//		double value2 = kugel(vector2.get(0), vector2.get(1), vector2.get(2), r);
+//		double value3 = kugel(vector3.get(0), vector3.get(1), vector3.get(2), r);
+//		double value4 = kugel(vector4.get(0), vector4.get(1), vector4.get(2), r);
+//		double value5 = kugel(vector5.get(0), vector5.get(1), vector5.get(2), r);
+//		double value6 = kugel(vector6.get(0), vector6.get(1), vector6.get(2), r);
+//		double value7 = kugel(vector7.get(0), vector7.get(1), vector7.get(2), r);
+//		double value8 = kugel(vector8.get(0), vector8.get(1), vector8.get(2), r);
+		
+		double value1 = torus(vector1.get(0), vector1.get(1), vector1.get(2), r, rr);
+		double value2 = torus(vector2.get(0), vector2.get(1), vector2.get(2), r, rr);
+		double value3 = torus(vector3.get(0), vector3.get(1), vector3.get(2), r, rr);
+		double value4 = torus(vector4.get(0), vector4.get(1), vector4.get(2), r, rr);
+		double value5 = torus(vector5.get(0), vector5.get(1), vector5.get(2), r, rr);
+		double value6 = torus(vector6.get(0), vector6.get(1), vector6.get(2), r, rr);
+		double value7 = torus(vector7.get(0), vector7.get(1), vector7.get(2), r ,rr);
+		double value8 = torus(vector8.get(0), vector8.get(1), vector8.get(2), r, rr);
 		
 		values.add(value1);
 		values.add(value2);
@@ -178,6 +200,28 @@ public class Aufgabe4 extends AbstractCGFrame{
 		valuesList.add(values);
 	}
 	
+	private double kugel(double x, double y, double z, double radius) {
+		return Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2) - Math.pow(radius, 2);
+	}
+	
+	private double torus(double x, double y, double z, double rI, double rA) {
+		return Math.pow((Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2) - Math.pow(rI, 2)),2) - Math.pow(4*rA, 2) * (Math.pow(x, 2) + Math.pow(y, 2));
+	}
+	
+	private double quad(double x, double y, double z, double r) {
+		return x * y * z - r;
+	}
+	
+	private void createMatrix(double begin, double end, double step) {
+		
+		for(double x = begin; x < end; x += step) {
+			for(double y = begin; y < end; y += step) {
+				for(double z = begin; z < end; z += step) {
+					ceateCube(x, y, z, step);
+				}
+			}
+		}
+	}
 	
 	public static void main(String[] args) {
 		Faces f = new Faces();
