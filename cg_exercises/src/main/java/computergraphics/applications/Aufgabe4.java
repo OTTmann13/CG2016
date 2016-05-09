@@ -30,12 +30,12 @@ public class Aufgabe4 extends AbstractCGFrame{
 	private static ITriangleMesh mesh = new TriangleMesh();
 	
 	private final int ISOWERT = 0;
-	private final double CUBERESOLUTION = 0.01;
+	private final double CUBERESOLUTION = 1;
 	private final double MATRIX_INTERVAL_MIN = -2;
 	private final double MATRIX_INTERVAL_MAX = 2;
-	private final String MODE = "stein";
+	private final String MODE = "kreuz";
 	private final double RADIUS = 0.5;
-	private final double OUTERRADIUS = 0.75;
+	private final double OUTERRADIUS = 1;
 	
 	private int cubeNumber = 0;
 	private int triangleNumber = 0;
@@ -63,16 +63,16 @@ public class Aufgabe4 extends AbstractCGFrame{
 		shader.addChild(shpereColor);
 		
 		//Draw the cube grid (remove comment not recommended at higher resolution)
-//		for(List<Vector3> points : pointsList) {
-//			SquareNode square = new SquareNode(points);
-//			squareColor.addChild(square);
-//			for(Vector3 point : points) {
-//				SphereNode shpere = new SphereNode(0.05, 20);
-//				TranslationNode translateSphere = new TranslationNode(point);
-//				translateSphere.addChild(shpere);
-//				shpereColor.addChild(translateSphere);
-//			}
-//		}
+		for(List<Vector3> points : pointsList) {
+			SquareNode square = new SquareNode(points);
+			squareColor.addChild(square);
+			for(Vector3 point : points) {
+				SphereNode shpere = new SphereNode(0.05, 20);
+				TranslationNode translateSphere = new TranslationNode(point);
+				translateSphere.addChild(shpere);
+				shpereColor.addChild(translateSphere);
+			}
+		}
 		
 		ColorNode triangleColor = new ColorNode(1, 0, 0);
 		shader.addChild(triangleColor);
@@ -197,8 +197,8 @@ public class Aufgabe4 extends AbstractCGFrame{
 			}else if(mode.equals("torus")) {
 				double value = torus(vector.get(0), vector.get(1), vector.get(2), RADIUS, OUTERRADIUS);
 				values.add(value);
-			}else if(mode.equals("boy")) {
-				double value = boy(vector.get(0), vector.get(1), vector.get(2));
+			}else if(mode.equals("kreuz")) {
+				double value = kreuz(vector.get(0), vector.get(1), vector.get(2));
 				values.add(value);
 			}else if(mode.equals("stein")) {
 				double value = stein(vector.get(0), vector.get(1), vector.get(2));
@@ -227,22 +227,22 @@ public class Aufgabe4 extends AbstractCGFrame{
 		}
 	}
 	
+	//Implizite formel für eine kugel
 	private double kugel(double x, double y, double z, double radius) {
 		return Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2) - Math.pow(radius, 2);
 	}
 	
+	//Implizite formel für ein torus
 	private double torus(double x, double y, double z, double rI, double rA) {
 		return Math.pow((Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2) + Math.pow(rA, 2) - Math.pow(rI, 2)),2) - (4 *Math.pow(rA, 2)) * (Math.pow(x, 2) + Math.pow(y, 2));
 	}
 	
-	private double boy(double x, double y, double z) {
-		double t1 = 64 * Math.pow((1 - z), 3) * Math.pow(z, 3);
-		double t2 = 48 * Math.pow((1 - z), 2) * Math.pow(z, 2) * (3 * Math.pow(x, 2) + 3 * Math.pow(y, 2) + 2 * Math.pow(z, 2));
-		double t3 = 12 * (1 - z) * z * (27 * Math.pow((Math.pow(x, 2) + Math.pow(y, 2)),2) - 24 * Math.pow(z,2) * (Math.pow(x, 2) + Math.pow(y, 2)) + 36 * Math.sqrt(2 * y * z * (Math.pow(y, 2) - 3 * Math.pow(x, 2))) + 4 * Math.pow(z, 4));
-		double t4 = (9 * Math.pow(x, 2) + 9 * Math.pow(y, 2) - 2 * Math.pow(z, 2)) * (-81 * Math.pow(Math.pow(x, 2) + Math.pow(y, 2),2) - 72 * Math.pow(z, 2) * (Math.pow(x, 2) + Math.pow(y, 2)) + 108 * Math.sqrt(2 * x * z *(Math.pow(x, 2) - 3 * Math.pow(y,2))) + 4 * Math.pow(z,4));
-		return t1 - t2 + t3 + t4;
+	//Implizite formel für die kreuzhaube-form
+	private double kreuz(double x, double y, double z) {
+		return 4 * Math.pow(x, 2) * (Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2) + z) + Math.pow(y, 2) * (Math.pow(y, 2) + Math.pow(z, 2) - 1);
 	}
 	
+	//Implizite formel für die steinersche römerfläche
 	private double stein(double x, double y, double z) {
 		return Math.pow(x, 2) * Math.pow(y, 2) + Math.pow(x, 2) * Math.pow(z, 2) + Math.pow(z, 2) * Math.pow(y, 2) + x*y*z;
 	}
