@@ -5,10 +5,14 @@ import java.io.FileReader;
 
 import javax.swing.plaf.synth.SynthDesktopIconUI;
 
+import computergraphics.datastructures.BezierCurve;
+import computergraphics.datastructures.HermitCurve;
 import computergraphics.datastructures.polygon.Polygon;
 import computergraphics.framework.AbstractCGFrame;
+import computergraphics.math.MathHelpers;
 import computergraphics.math.Vector3;
 import computergraphics.scenegraph.ColorNode;
+import computergraphics.scenegraph.CurveNode;
 import computergraphics.scenegraph.PolygonNode;
 import computergraphics.scenegraph.ShaderNode;
 import computergraphics.scenegraph.ShaderNode.ShaderType;
@@ -23,35 +27,49 @@ public class Aufgabe5 extends AbstractCGFrame{
 	private Polygon polygon = new Polygon();
 	
 	private final int RESOLUTION = 7;
+	private CurveNode curve;
+	private double t = 0.0;
 	
 	public Aufgabe5(int timerInterval) {
 		super(timerInterval);
 		
-		readPolygon("square.polygon");
+		readPolygon("open.polygon");
 		
-		for(int i = 0; i < RESOLUTION; i++) {
-			polygon.split();
-			polygon.avgerage();
-		}
+		BezierCurve bezierCurve = new BezierCurve(polygon);
 		
+		HermitCurve hermitCurve = new HermitCurve(polygon);
+		
+//		for(int i = 0; i < RESOLUTION; i++) {
+//			polygon.split();
+//			polygon.avgerage();
+//		}
+//		
 		
 		PolygonNode pn = new PolygonNode(polygon);
 		getRoot().addChild(pn);
+		
+		ColorNode curveColor = new ColorNode(1.0, 0.0, 0.0);
+		getRoot().addChild(curveColor);
+		
+		curve = new CurveNode(bezierCurve, 30);
+		curveColor.addChild(curve);
 		
 		ShaderNode shader = new ShaderNode(ShaderType.PHONG);
 		getRoot().addChild(shader);
 		
 		//Add commented code to show the nodes (not recommended with a higher iteration)
-//		for(int i = 0; i < polygon.getNumberOfVertecies(); i++) {
-//			ColorNode c = new ColorNode(1.0, 0.0, 0.0);
-//			shader.addChild(c);
-//			SphereNode sphere = new SphereNode(0.01, 30);
-//			TranslationNode translateSphere = new TranslationNode(polygon.getVertex(i).getPosition());
-//			translateSphere.addChild(sphere);
-//			c.addChild(translateSphere);
-//		}
+		for(int i = 0; i < polygon.getNumberOfVertecies(); i++) {
+			ColorNode c = new ColorNode(1.0, 0.0, 0.0);
+			shader.addChild(c);
+			SphereNode sphere = new SphereNode(0.01, 30);
+			TranslationNode translateSphere = new TranslationNode(polygon.getVertex(i).getPosition());
+			translateSphere.addChild(sphere);
+			c.addChild(translateSphere);
+		}
+		
+		
 	}
-	
+
 	
 	/**
 	 * read a text file and create a polygon with given data
@@ -91,8 +109,8 @@ public class Aufgabe5 extends AbstractCGFrame{
 	
 	@Override
 	protected void timerTick() {
-		// TODO Auto-generated method stub
-		
+//		curve.setTangentT(t);
+//		t = (t + 0.1) % 1.0;
 	}
 		
 	public static void main(String[] args) {
