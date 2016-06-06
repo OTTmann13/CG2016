@@ -14,4 +14,8 @@ public abstract class Curve {
 	public abstract Vector3 getCurveValue(double t);
 	
 	public abstract Vector3 getTangent(double t);
+	
+	public abstract Vector3 getSplineCurveValue(double t, int i);
+	
+	public abstract Vector3 getSplineTangent(int i);
 }

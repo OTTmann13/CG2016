@@ -33,5 +33,15 @@ public class BezierCurve extends Curve{
 	public Vector3 getTangent(double t) {
 		return getCurveValue(t + h).subtract(getCurveValue(t)).multiply((1/h));
 	}
+	
+	@Override
+	public Vector3 getSplineCurveValue(double t, int i) {
+		return null;
+	}
+	
+	@Override
+	public Vector3 getSplineTangent(int i) {
+		return null;
+	}
 
 }

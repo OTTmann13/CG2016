@@ -33,7 +33,7 @@ public class Aufgabe5 extends AbstractCGFrame{
 	public Aufgabe5(int timerInterval) {
 		super(timerInterval);
 		
-		readPolygon("open.polygon");
+		readPolygon("curve.polygon");
 		
 		BezierCurve bezierCurve = new BezierCurve(polygon);
 		
@@ -51,7 +51,7 @@ public class Aufgabe5 extends AbstractCGFrame{
 		ColorNode curveColor = new ColorNode(1.0, 0.0, 0.0);
 		getRoot().addChild(curveColor);
 		
-		curve = new CurveNode(bezierCurve, 30);
+		curve = new CurveNode(hermitCurve, 30, polygon);
 		curveColor.addChild(curve);
 		
 		ShaderNode shader = new ShaderNode(ShaderType.PHONG);
@@ -109,8 +109,8 @@ public class Aufgabe5 extends AbstractCGFrame{
 	
 	@Override
 	protected void timerTick() {
-//		curve.setTangentT(t);
-//		t = (t + 0.1) % 1.0;
+		curve.setTangentT(t);
+		t = (t + 0.1) % 1.0;
 	}
 		
 	public static void main(String[] args) {
