@@ -10,6 +10,10 @@ import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.glu.GLUquadric;
 
+import computergraphics.datastructures.IntersectionResult;
+import computergraphics.datastructures.Ray3D;
+import computergraphics.math.Vector3;
+
 /**
  * Geometry of a simple sphere.
  * 
@@ -27,12 +31,37 @@ public class SphereNode extends Node {
 	 */
 	private int resolution;
 
+	
+	private Vector3 center = new Vector3();
 	/**
 	 * Constructor.
 	 */
 	public SphereNode(double radius, int resolution) {
 		this.radius = radius;
 		this.resolution = resolution;
+	}
+	
+	public SphereNode(double radius, Vector3 center) {
+		this.radius = radius;
+		this.center.copy(center);
+	}
+	
+	public IntersectionResult findIntersection(Node object, Ray3D ray) {
+		
+		double p = (ray.getPoint().multiply(ray.getDirection()) * 2) - (center.multiply(ray.getDirection()) * 2) / ray.getDirection().multiply(ray.getDirection());
+		double q = ((ray.getPoint().multiply(ray.getPoint()) - (2 * ray.getPoint().multiply(center)) + center.multiply(center)) - Math.pow(radius, 2)) / (ray.getDirection().multiply(ray.getDirection()));
+		double lambda = Math.min((p/-2) + Math.sqrt(Math.pow(p, 2)/4 - q),(p/-2) - Math.sqrt(Math.pow(p, 2)/4 - q));
+
+		if (Double.isNaN(lambda) || lambda <= 0) {
+			return null;
+		}
+		
+		IntersectionResult result = new IntersectionResult();
+		result.point = ray.getPoint().add(ray.getDirection().multiply(lambda));
+		result.object = this;
+		result.normal = center.subtract(result.point).getNormalized();
+		
+		return result;
 	}
 
 	@Override
@@ -46,6 +75,15 @@ public class SphereNode extends Node {
 		final int slices = resolution;
 		final int stacks = resolution;
 		glu.gluSphere(earth, radius, slices, stacks);
+	}
+	
+	public Vector3 getCenter() {
+		return center;
+	}
+
+
+	public void setCenter(Vector3 center) {
+		this.center = center;
 	}
 
 }
