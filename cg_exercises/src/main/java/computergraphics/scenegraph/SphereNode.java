@@ -52,7 +52,7 @@ public class SphereNode extends Node {
 		double q = ((ray.getPoint().multiply(ray.getPoint()) - (2 * ray.getPoint().multiply(center)) + center.multiply(center)) - Math.pow(radius, 2)) / (ray.getDirection().multiply(ray.getDirection()));
 		double lambda = Math.min((p/-2) + Math.sqrt(Math.pow(p, 2)/4 - q),(p/-2) - Math.sqrt(Math.pow(p, 2)/4 - q));
 
-		if (Double.isNaN(lambda) || lambda <= 0) {
+		if (Double.isNaN(lambda) || lambda < 0) {
 			return null;
 		}
 		
@@ -76,14 +76,4 @@ public class SphereNode extends Node {
 		final int stacks = resolution;
 		glu.gluSphere(earth, radius, slices, stacks);
 	}
-	
-	public Vector3 getCenter() {
-		return center;
-	}
-
-
-	public void setCenter(Vector3 center) {
-		this.center = center;
-	}
-
 }

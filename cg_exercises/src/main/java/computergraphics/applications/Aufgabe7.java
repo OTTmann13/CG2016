@@ -23,35 +23,31 @@ public class Aufgabe7 extends AbstractCGFrame{
 		
 		Node root = new RootNode();
 		
-		Node sp1 = new SphereNode(1, new Vector3(2.5,0,0));
-		sp1.setColor(new Vector3(1,0,0));
-//		sp1.setGlossiness(5);
-//		sp1.setReflection(1);
+		Node sphere1 = new SphereNode(1, new Vector3(-2.5, 0, 2.5));
+		sphere1.setColor(new Vector3(1, 0, 0));
 		
-		Node sp2 = new SphereNode(1, new Vector3(0,0,0));
-		sp2.setColor(new Vector3(1,0,0));
-		sp2.setGlossiness(5);
-		sp2.setReflection(1);
+		Node sphere2 = new SphereNode(1, new Vector3(0, 1, 0));
+		sphere2.setColor(new Vector3(0, 1, 0));
+		sphere2.setReflection(0.8);
 
 		
-		Node sp3 = new SphereNode(1, new Vector3(-2.5,0,0));
-		sp3.setColor(new Vector3(0,1,1));
-		sp3.setGlossiness(30);
-		sp3.setReflection(0.5);
-	
-		Node e1 = new PlainNode(new Vector3(0,-1,0), new Vector3(0,-1,0));
+		Node sphere3 = new SphereNode(1, new Vector3(2.5, 0, -3));
+		sphere3.setColor(new Vector3(0, 0, 1));
+		sphere3.setReflection(0.0);
 
+		Node plain = new PlainNode(new Vector3(0, -1, 0), new Vector3(-0.5, 0.0, -1), new Vector3(1, 0, -0.5));
 
-		root.addChild(sp1);
-		root.addChild(sp2);
-		root.addChild(sp3);
-		root.addChild(e1);
+		root.addChild(sphere1);
+		root.addChild(sphere2);
+		root.addChild(sphere3);
+		root.addChild(plain);
 
 		
 		
 		Camera c = new Camera();
-		c.setEye(new Vector3(7,5,10));
-		c.setRef(new Vector3(0,0,1));
+		c.setEye(new Vector3(7, 5, 10));
+//		c.setEye(new Vector3(-3, 7, 10));
+		c.setRef(new Vector3(0, 0, 1));
 		
 		Raytracer tracer = new Raytracer(c, root);
 		ImageViewer viewer = new ImageViewer(tracer.render(800, 640));

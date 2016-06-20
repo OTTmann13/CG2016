@@ -25,8 +25,8 @@ public class Raytracer {
    */
   private final Camera camera;
   private List<Node> childNodes = new ArrayList<Node>();
-  private LightSource light = new LightSource(new Vector3(-2,3,4),new Vector3(1,1,1));
-  private static final double SHADOW_INFLUENCE = 0.5;
+  private LightSource light = new LightSource(new Vector3(5, 5, 10),new Vector3(1, 1, 1));
+  
   /**
    * Constructor.
    * 
@@ -98,16 +98,16 @@ public class Raytracer {
    */
   private Vector3 trace(Ray3D ray, int recursion) {
 
-	// Abbruch der Rekursion
+	//recursvion terminator
 	if (recursion > 2) {
 		
 		return new Vector3(0, 0, 0);
 	}
 	
-	// Schnittpunkt zum nähesten Objekt
 	IntersectionResult intersection = null;
-	// Distanz des Schnittpunktes mit dem letzten Objekt 
-	double current_distance = Double.MAX_VALUE;
+	
+	//current closest object distance
+	double current_min_distance = Double.MAX_VALUE;
 	
 	for (Node node: childNodes) {
 		
@@ -116,12 +116,14 @@ public class Raytracer {
 			IntersectionResult result = node.findIntersection(node, ray);
 		
 			if (result != null) {
-				// Distanz zum Schnittpunkt geringer als letzte gespeicherte
+		
 				double distance = ray.getPoint().subtract(result.point).getSqrNorm(); 
-				if (distance < current_distance) {
+				
+				//found closer object
+				if (distance < current_min_distance) {
 					
 					intersection = result;
-					current_distance = distance;
+					current_min_distance = distance;
 				}			
 			}
 		}
@@ -129,31 +131,28 @@ public class Raytracer {
 		
 	if (intersection != null) {
 		
-		double shadow_influence = getShadow(intersection);
+		boolean object_in_shadow = checkShadow(intersection);
 		
 		Vector3 color = intersection.object.getColor();
 		
-		if (intersection.object.getClass().equals(PlainNode.class))
-		{
-			color = ((PlainNode)intersection.object).getChessboardColor(intersection.point);
-		}
-		
-		// Bei einer Ebene Farbe des Schachbrettkaros ermitteln
-		if (intersection.object.getClass().equals(PlainNode.class)) {
-			color = ((PlainNode)intersection.object).getChessboardColor(intersection.point);
-		}
-		
-		color = getLightningColor(intersection, ray, color);
-		
-		color = color.multiply(1-shadow_influence);
-		
+		if(!object_in_shadow) {
+			color = getLightningColor(intersection, ray, color);
+			
+		}else{
+			color = new Vector3(0, 0, 0);
+//			color = color.multiply(0.1);
+		}		
 		
 		if (intersection.object.getReflection() > 0) {
 			color = color.multiply(1 - intersection.object.getReflection());
 			
-			Vector3 ideal_reflect = ray.getDirection().subtract(intersection.normal.multiply(2*ray.getDirection().multiply(intersection.normal)));
+			Vector3 N = intersection.normal;
+			Vector3 L = ray.getDirection();
 			
-			Vector3 reflected_color = trace(new Ray3D(intersection.point,ideal_reflect), recursion + 1);
+			//2(LN)N - L
+			Vector3 ideal_reflection = L.subtract(N.multiply(2 * L.multiply(N)));
+			
+			Vector3 reflected_color = trace(new Ray3D(intersection.point,ideal_reflection), recursion + 1);
 			
 			reflected_color = reflected_color.multiply(intersection.object.getReflection());
 			
@@ -163,61 +162,56 @@ public class Raytracer {
 		return color;
 	}
 	
-    // Your task
-    return new Vector3(1, 0, 0);
+    return new Vector3(0, 0, 0);
   }
   
-	private Vector3 getLightningColor(IntersectionResult schnittpunkt, Ray3D ray, Vector3 objectColor)
-	{
-		// Hilfsvariablen
-		int m = schnittpunkt.object.getGlossiness();
-		// Für diffus
-		Vector3 N = schnittpunkt.normal;
-		Vector3 Vs = ray.getDirection().getNormalized();
-		Vector3 L = schnittpunkt.point.subtract(light.getPosition()).getNormalized();
-		// Für spekular
-		double LN = L.multiply(N);
-		Vector3 R = L.subtract(N.multiply(2*LN));
-		double RVs = R.multiply(Vs.multiply(-1));
-		
-		Vector3 cDiff = new Vector3(0, 0, 0); // Initial
-		Vector3 cSpec = new Vector3(0, 0, 0); // Initial
-		
-		if (LN > 0)
-		{
-			cDiff = objectColor.multiply(LN);
-		}
-		
-		if (RVs > 0)
-		{
-			cSpec = (new Vector3(1, 1, 1)).multiply(Math.pow(RVs, m)); //.multiply(new Vector3(1,1,1));
-		}
-		return cDiff.add(cSpec);
-	}
-  
-  private double getShadow(IntersectionResult intersection) {
-	  
-	  double distance_to_light = (light.getPosition().getNorm() - intersection.point.getNorm());
+  private boolean checkShadow(IntersectionResult intersection) {
 	  
 	  for (Node n: childNodes) {
 		  
 		  if (!n.equals(intersection.object)) {
 			  
-			  IntersectionResult shadow_result = n.findIntersection(intersection.object, new Ray3D(intersection.point, light.getPosition().subtract(intersection.point).getNormalized()));
+			  IntersectionResult intersection_with_blocking_object = n.findIntersection(intersection.object, new Ray3D(intersection.point, light.getPosition().subtract(intersection.point).getNormalized()));
 			  
-			  if (shadow_result != null) {
+			  if (intersection_with_blocking_object != null) {
 					
-				  double shadow_distance = (shadow_result.point.getNorm() - intersection.point.getNorm());
-			  
-				  if (shadow_distance < distance_to_light) {
-						// Objekt liegt im Schatten
-						return SHADOW_INFLUENCE;
-				  }
+				  return true;
 			  }
 		  }
 	  }
-	  return 0;
+	  return false;
   }
+  
+  
+  private Vector3 getLightningColor(IntersectionResult intersection, Ray3D ray, Vector3 objectColor) {
+	  int m = 20;
+	
+	  Vector3 N = intersection.normal;
+	  Vector3 Vs = ray.getDirection().getNormalized();
+	  Vector3 L = intersection.point.subtract(light.getPosition()).getNormalized();
+	  
+	  double NL = N.multiply(L);
+	  Vector3 R = L.subtract(N.multiply(2*NL));
+	  double RVs = R.multiply(Vs.multiply(-1));
+	  
+	  //initilize with black
+	  Vector3 colorDiff = new Vector3(0, 0, 0); 
+	  Vector3 colorSpec = new Vector3(0, 0, 0);
+	  
+	  if (NL > 0) {
+		  
+		  colorDiff = objectColor.multiply(NL);
+	  }
+	  
+	  if (RVs > 0) {
+		  
+		  colorSpec = (new Vector3(1, 1, 1)).multiply(Math.pow(RVs, m)); //.multiply(new Vector3(1,1,1));
+	  }
+	  
+	  return colorDiff.add(colorSpec);
+  }
+  
+
   
 
 }

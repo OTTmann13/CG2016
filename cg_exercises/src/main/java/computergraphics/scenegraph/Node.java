@@ -27,8 +27,7 @@ public abstract class Node {
    * List of child nodes
    */
   private List<Node> children = new ArrayList<Node>();
-  private Vector3 color = new Vector3(0, 1, 0);
-  private int glossiness = 20;
+  private Vector3 color = new Vector3(0.8, 0.8, 0.8);
   private double reflection = 0;
   /**
    * Add a child node.
@@ -84,14 +83,6 @@ public abstract class Node {
   
   public Vector3 getColor() {
     return color;
-  }
-  
-  public void setGlossiness(int glossiness) {
-	  this.glossiness = glossiness;
-  }
-  
-  public int getGlossiness() {
-	  return glossiness;
   }
   
   public void setReflection(double reflection) {

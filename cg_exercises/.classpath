@@ -3,11 +3,11 @@
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="C:/Users/Steffen/Documents/Uni/6_Semester/CG/Lib/jogamp-all-platforms/jar/gluegen-rt.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Steffen/Documents/Uni/6_Semester/CG/Lib/jogamp-all-platforms/jar/gluegen-rt-natives-windows-amd64.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Steffen/Documents/Uni/6_Semester/CG/Lib/jogamp-all-platforms/jar/gluegen-rt-natives-windows-i586.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Steffen/Documents/Uni/6_Semester/CG/Lib/jogamp-all-platforms/jar/jogl-all.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Steffen/Documents/Uni/6_Semester/CG/Lib/jogamp-all-platforms/jar/jogl-all-natives-windows-amd64.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Steffen/Documents/Uni/6_Semester/CG/Lib/jogamp-all-platforms/jar/jogl-all-natives-windows-i586.jar"/>
+	<classpathentry kind="lib" path="Z:/win7/CG2016/jogamp-all-platforms/jar/gluegen-rt.jar"/>
+	<classpathentry kind="lib" path="Z:/win7/CG2016/jogamp-all-platforms/jar/gluegen-rt-natives-windows-amd64.jar"/>
+	<classpathentry kind="lib" path="Z:/win7/CG2016/jogamp-all-platforms/jar/gluegen-rt-natives-windows-i586.jar"/>
+	<classpathentry kind="lib" path="Z:/win7/CG2016/jogamp-all-platforms/jar/jogl-all.jar"/>
+	<classpathentry kind="lib" path="Z:/win7/CG2016/jogamp-all-platforms/jar/jogl-all-natives-windows-amd64.jar"/>
+	<classpathentry kind="lib" path="Z:/win7/CG2016/jogamp-all-platforms/jar/jogl-all-natives-windows-i586.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
